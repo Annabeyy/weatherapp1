@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>sunnyapp</title>
+    <meta charset="UTF-8" />
+
+    <script src="https://kit.fontawesome.com/c5c9a66b9c.js" crossorigin="anonymous">
+    </script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+
+    <link href="src/styles.css" rel="stylesheet" type="text/css" />
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+
+<style>h1 {
+  font-size: 30px;
+  color: #1f6650;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+}
+
+input {
+  align-content: left;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  color: #1f6650;
+  margin: 0;
+  border: 0, 5px solid #e0e0e0;
+  border-radius: 5px;
+  width: 160px;
+  height: 25px;
+  justify-content: right;
+}
+
+button {
+  text-align: center;
+  background: transparent;
+  border: 0;
+}
+
+hr {
+  border: 0.5px solid #ea5e5e;
+  max-lines: 400px;
+}
+
+i {
+  font-size: 30px;
+  text-align: center;
+  position: relative;
+  top: -8px;
+  color: #1f6650;
+}
+
+.fa-search {
+  color: #ea5e5e; 
+  font-size: 13px;
+  align-content: right;
+  margin: 0;
+  top: 1px;
+}
+
+.weather-app {
+  border: 1px solid #ea5e5e;
+  margin: 60px auto;
+  max-width: 700px;
+  padding: 20px;
+  border-radius: 8px;
+  align-content: center;
+  justify-content: center;
+  background-color: #eafbea;
+}
+
+.weather-app li {
+  list-style: none;
+  color: #1f6650; 
+  text-align: center; 
+}
+
+.weather-app ul {
+  margin: 0 0 20px;
+  padding: 0;
+}
+
+.weather-temperature-today {
+  font-size: 75px;
+  line-height: 68px;
+  color: #1f6650;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-weight: lighter;
+  position: relative;
+  top: -5px;
+}
+
+.weather-temperature-today small {
+  font-size: 14px;
+  position: relative;
+  top: -32px;
+  margin-left: 0px;
+  font-family: "Open Sans", sans-serif;
+}
+
+.clearfix {
+  display: inline-block;
+  justify-content: center;
+  vertical-align: middle;
+  align-items: center;
+}
+
+.active {
+  color: #000;
+  cursor: default;
+}
+
+.active:hover {
+  color: #000;
+  text-decoration: none;
+}
+
+ul#data-time {
+  font-size: 14px;
+  color: #616161;
+  text-align: left;
+  font-family: "Open Sans", sans-serif;
+  display: block;
+  position: relative;
+  top: 13px;
+}
+
+ul#other-values {
+  font-size: 14px;
+  color: #616161;
+  text-align: left;
+  font-family: "Open Sans", sans-serif;
+  display: block;
+  position: relative;
+  top: 57px;
+}
+
+span#night {
+  color: #9e9e9e;
+}
+
+li#status {
+  font-size: 14px;
+  color: rgba(34, 138, 94, 0.3);
+  font-family: "Open Sans", sans-serif;
+}
+
+i#icon-today {
+  font-size: 55px;
+  text-align: center;
+  color: #ea5e5e;
+  position: relative;
+  top: -12px;
+  left: 8px;
+}
+
+i.fas.fa-sun {
+  color: #ea5e5e;
+}
+
+div.next-day {
+  font-size: 14px;
+  color: #1f6650;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  display: inline-block;
+  justify-content: center;
+  vertical-align: middle;
+  align-items: center;
+}</style>
+
+<body>
+    <div class="container">
+        <section class="weather-app">
+
+            <div class="search float">
+                <form id="search-form">
+                    <input id="search-input" type="text" placeholder="Search City" autocomplete="off" />
+                    <button type="submit" value="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+
+            </br>
+            <hr>
+            </br>
+
+            <div class="row">
+                <div class="col-4">
+                    <h1 id="city-name">Berlin</h1>
+
+                    <ul id="data-time">
+                        <li id="current-day">
+                            Monday - Ocotber 17
+                        </li>
+                        <li id="current-time">
+                            20:00
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="col-4">
+                    <div class="clearfix">
+                        <i id="icon-today" class="fas fa-cloud-sun float-centre"></i>
+                        <div>
+                            <div class="weather-temperature-today centre">
+                                <span id="temperature"></span>
+
+                                <span class="weather-unit">
+                                    <small>
+                                        <a href="#" id="celsius">
+                                            ºC
+                                        </a>
+                                        |
+                                        <a href="#" id="fahrenheit">
+                                            ºF
+                                        </a>
+                                    </small>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <hr>
+            </br>
+
+            <div class="row forecast">
+                <div class="col-sm next-day">
+                    <div>
+                        <i class="fas ffas fa-sun"></i>
+                    </div>
+                    <ul>
+                        <li>
+                            Monday
+                        </li>
+                        <li class="weather-temperature float-centre">
+                            <span id="day">
+                                11 º
+                            </span>
+                            <span id="night">
+                                0º
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                </br>
+
+                <div class="col-sm next-day">
+                    </br>
+                    <div>
+                        <i class="fas fas fa-sun"></i>
+                    </div>
+                    <ul>
+                        <li>
+                            Tuesday
+                        </li>
+                        <li class="weather-temperature float-centre">
+                            <span id="day">
+                                8º
+                            </span>
+                            <span id="night">
+                                -3º
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-sm next-day">
+                    </br>
+                    <div>
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <ul>
+                        <li>
+                            Wednesday
+                        </li>
+                        <li class="weather-temperature float-centre">
+                            <span id="day">
+                                10º
+                            </span>
+                            <span id="night">
+                                1º
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-sm next-day">
+                    </br>
+                    <div>
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <ul>
+                        <li>
+                            Thursday
+                        </li>
+                        <li class="weather-temperature float-centre">
+                            <span id="day">
+                                4º
+                            </span>
+                            <span id="night">
+                                -6º
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-sm next-day">
+                    </br>
+                    <div>
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <ul>
+                        <li>
+                            Friday
+                        </li>
+                        <li class="weather-temperature float-centre">
+                            <span id="day">
+                                10º
+                            </span>
+                            <span id="night">
+                                -4º
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+        </section>
+    </div>
+
+    <script src="src/index.js">
+    function search(event) {
+            event.preventDefault();
+            let searchInput = document.querySelector("#search-input");
+            if (searchInput.value.length) {
+                let city = document.querySelector("#city-name");
+                city.innerHTML = searchInput.value;
+            }
+            let url = `https://api.openweathermap.org/data/2.5/weather?q=${searchInput.value}&appid=c5c1992383057589b3e373582566187c&units=metric`;
+            axios.get(url).then(convertToCelsius);
+        }
+
+        function convertToCelsius(response) {
+            let temperature = document.querySelector("#temperature");
+            temperature.innerHTML = Math.round(response.data.main.temp);
+
+            let link = document.querySelector("#celsius");
+            link.classList.add("active");
+            let fahrenheitLink = document.querySelector("#fahrenheit");
+            fahrenheitLink.classList.remove("active");
+        }
+
+        let celsiusLink = document.querySelector("#celsius");
+        celsiusLink.addEventListener("click", convertToCelsius);
+
+        function convertToFahrenheit(event) {
+            let temperature = document.querySelector("#temperature");
+            temperature.innerHTML = Math.round((23 * 9) / 5 + 32);
+
+            let link = document.querySelector("#fahrenheit");
+            link.classList.add("active");
+            let celsiusLink = document.querySelector("#celsius");
+            celsiusLink.classList.remove("active");
+        }
+
+        let fahrenheitLink = document.querySelector("#fahrenheit");
+        fahrenheitLink.addEventListener("click", convertToFahrenheit);
+
+        let searchForm = document.querySelector("#search-form");
+        searchForm.addEventListener("submit", search);
+
+        let dateDay = document.querySelector("#current-day");
+        let dateTime = document.querySelector("#current-time");
+
+        let currentTime = new Date();
+        let date = currentTime.getDate();
+
+        let months = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        ];
+        let month = months[currentTime.getMonth()];
+
+        let days = [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+        ];
+        let day = days[currentTime.getDay()];
+
+        dateDay.innerHTML = day + ", " + date + " " + month;
+
+        let hours = currentTime.getHours();
+        let minuties = currentTime.getMinutes();
+        dateTime.innerHTML = hours + ":" + minuties;
+
+    </script>
+</body>
+
+</html>
